@@ -14,18 +14,18 @@ func firstUniqChar(s string) int {
 	return -1
 }
 
-//58 
+//58
 func lengthOfLastWord(s string) int {
 	isFirstLetter := false
 	length := 0
-	for i := len(s)-1; i >= 0; i-- {
+	for i := len(s) - 1; i >= 0; i-- {
 		if (s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z') {
 			isFirstLetter = true
 			length++
-		}  else {
+		} else {
 			if isFirstLetter {
 				return length
-			}	
+			}
 		}
 	}
 	return length
@@ -33,14 +33,50 @@ func lengthOfLastWord(s string) int {
 
 //242
 func isAnagram(s string, t string) bool {
-	m := make(map[rune]bool)
-	for _, v := range s {
-		m[v] = true
+	if len(s) != len(t) {
+		return false
 	}
-	for _, v := range t {
-		if _, ok := m[v]; !ok {
+	m := make([]int, 26)
+	for i := range s {
+		m[s[i]-'a']++
+		m[t[i]-'a']--
+	}
+	for _, v := range m {
+		if v != 0 {
 			return false
 		}
 	}
 	return true
 }
+
+//1089    ===> Working
+func duplicateZeros(arr []int) {
+	l := len(arr)
+	for i, v := range arr {
+		if v == 0 {
+			arr = append(arr[:i], append([]int{0, 0}, arr[i+1:(l-1)]...)...)
+		}
+	}
+}
+
+//1313
+//844
+//20
+//1047
+//1
+//167
+//9
+//88
+//234   => Linked List
+//21
+//160
+//328
+//2
+//237
+//83
+//82
+//19
+//706
+//382
+//141
+//142

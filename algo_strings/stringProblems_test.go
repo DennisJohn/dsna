@@ -33,3 +33,10 @@ func TestIsAnagram(t *testing.T) {
 		t.Errorf("Exptected %v, got %v", true, false)
 	}
 }
+
+
+func BenchmarkIsAnagram(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		isAnagram("anagram", "nagaram")
+	}
+}
