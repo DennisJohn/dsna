@@ -40,3 +40,11 @@ func BenchmarkIsAnagram(b *testing.B) {
 		isAnagram("anagram", "nagaram")
 	}
 }
+
+// func TestDuplicateZeros(t *testing.T) {
+// 	if duplicateZeros([]int{0,0,0,0,0,0,0}) != []int{0,0,0,0,0} {
+// 		t.Errorf("Exptected %v, got %v", true, false)
+// 	}
+// }
+
+

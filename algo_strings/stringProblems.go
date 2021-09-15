@@ -49,14 +49,14 @@ func isAnagram(s string, t string) bool {
 	return true
 }
 
-//1089    ===> Working
-func duplicateZeros(arr []int) {
-	l := len(arr)
-	for i, v := range arr {
-		if v == 0 {
-			arr = append(arr[:i], append([]int{0, 0}, arr[i+1:(l-1)]...)...)
-		}
-	}
+//1089
+func duplicateZeros(arr []int)  {
+    for i := 0; i < len(arr) - 1; i++ {
+        if arr[i] == 0 {
+            copy(arr[i+1:], arr[i:])
+            i++
+        }
+    }
 }
 
 //1313
