@@ -18,7 +18,7 @@ func BenchmarkFirstuniqchar(b *testing.B) {
 
 func TestLengthOfLastWord(t *testing.T) {
 	if lengthOfLastWord("This is a Test") != 4 {
-		t.Errorf("Expected %v, got %v", 4, lengthOfLastWord("This is a Test"))	
+		t.Errorf("Expected %v, got %v", 4, lengthOfLastWord("This is a Test"))
 	}
 }
 
@@ -34,10 +34,28 @@ func TestIsAnagram(t *testing.T) {
 	}
 }
 
-
 func BenchmarkIsAnagram(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		isAnagram("anagram", "nagaram")
+	}
+}
+
+func TestShortestDistance(t *testing.T) {
+	x := shortestDistance([]string{"practice", "makes", "perfect", "coding", "makes"}, "coding", "practice")
+	if x != 3 {
+		t.Errorf("Exptected %v, got %v", 1, x)
+	}
+}
+
+func BenchmarkShortestDistance(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		shortestDistance([]string{"practice", "makes", "perfect", "coding", "makes"}, "coding", "practice")
+	}
+}
+
+func BenchmarkShortestDistance2(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		shortestDistance2([]string{"practice", "makes", "perfect", "coding", "makes"}, "coding", "practice")
 	}
 }
 
@@ -46,5 +64,3 @@ func BenchmarkIsAnagram(b *testing.B) {
 // 		t.Errorf("Exptected %v, got %v", true, false)
 // 	}
 // }
-
-
