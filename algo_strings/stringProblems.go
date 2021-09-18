@@ -1,5 +1,7 @@
 package algo_strings
 
+import "strings"
+
 //387
 func firstUniqChar(s string) int {
 	m := make([]int, 26)
@@ -78,7 +80,7 @@ func shortestDistance(wordsDict []string, word1 string, word2 string) int {
 	return min
 }
 
-//243
+//243 - Slow
 func shortestDistance2(wordsDict []string, word1 string, word2 string) int {
 	w1 := []int{}
 	w2 := []int{}
@@ -121,6 +123,79 @@ func decompressRLElist(nums []int) []int {
 }
 
 //844
+func backspaceCompare(s string, t string) bool {
+	return genString(s) == genString(t)
+}
+
+func genString(s string) string {
+	var o strings.Builder
+	hc := 0
+	for i := len(s) - 1; i >= 0; i-- {
+		if s[i] == '#' {
+			hc++
+		}
+		if s[i] >= 'a' && s[i] <= 'z' {
+			if hc > 0 {
+				hc--
+				continue
+			}
+			o.WriteByte(s[i])
+		}
+	}
+	return o.String()
+}
+
+func backspaceCompareSingleLoop(s string, t string) bool {
+	ls, lt, hs, ht, ts, tt := len(s)-1, len(t)-1, 0, 0, "", ""
+	for ls >= 0 || lt >= 0 {
+		for ls >= 0 {
+			if s[ls] == '#' {
+				hs++
+				ls--
+				continue
+			}
+			if s[ls] >= 'a' && s[ls] <= 'z' {
+				if hs > 0 {
+					hs--
+					ls--
+					continue
+				}
+				ts = string(s[ls])
+				break
+			}
+		}
+
+		for lt >= 0 {
+			if t[lt] == '#' {
+				ht++
+				lt--
+				continue
+			}
+			if t[lt] >= 'a' && t[lt] <= 'z' {
+				if ht > 0 {
+					ht--
+					lt--
+					continue
+				}
+				tt = string(t[lt])
+				break
+			}
+		}
+		if ls < 0 {
+			ts = ""
+		}
+		if lt < 0 {
+			tt = ""
+		}
+		if ts != tt {
+			return false
+		}
+		ls--
+		lt--
+	}
+	return true
+}
+
 //20
 //1047
 //1

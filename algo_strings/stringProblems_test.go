@@ -59,6 +59,30 @@ func BenchmarkShortestDistance2(b *testing.B) {
 	}
 }
 
+func TestBackspaceCompare(t *testing.T) {
+	if !backspaceCompare("ab#c", "ad#c") {
+		t.Errorf("Expected %v, got %v", true, false)
+	}
+}
+
+func BenchmarkBackspaceCompare(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		backspaceCompare("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabas###dfasdf#c", "aaaaaaaaaaaaaeaaaaaaaaaaaaaaad#c")
+	}
+}
+
+func TestBackspaceCompareSingleLoop(t *testing.T) {
+	if !backspaceCompareSingleLoop("ab#c", "ad#c") {
+		t.Errorf("Expected %v, got %v", true, false)
+	}
+}
+
+func BenchmarkBackspaceCompareSingleLoop(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		backspaceCompareSingleLoop("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabas###dfasdf#c", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaad#c")
+	}
+}
+
 // func TestDuplicateZeros(t *testing.T) {
 // 	if duplicateZeros([]int{0,0,0,0,0,0,0}) != []int{0,0,0,0,0} {
 // 		t.Errorf("Exptected %v, got %v", true, false)
