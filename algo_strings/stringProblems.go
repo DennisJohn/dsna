@@ -288,6 +288,24 @@ func twoSum(nums []int, target int) []int {
 }
 
 //167
+func twoSumSorted(numbers []int, target int) []int {
+    l := 0
+    r := len(numbers) - 1
+    for l < r {
+        o := numbers[l] + numbers[r] 
+        if o == target {
+            return []int{l+1, r+1}
+        }
+        if o > target {
+            r--
+        } else {
+            l++
+        }
+    }
+    return []int{-1, -1}
+}
+
+
 //9
 //88
 //234   => Linked List

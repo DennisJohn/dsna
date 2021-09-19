@@ -12,3 +12,4 @@ Completed String Problems
 20 isValidParanthesis
 1047 removeDuplicates
 1 twoSum
+167 twoSumSorted
