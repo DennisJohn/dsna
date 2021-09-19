@@ -197,8 +197,96 @@ func backspaceCompareSingleLoop(s string, t string) bool {
 }
 
 //20
+func isValid(s string) bool {
+	st := stack{[]rune{}}
+	for _, v := range s {
+		if v == '[' || v == '(' || v == '{' {
+			st.push(v)
+		} else {
+			if len(st.s) == 0 {
+				return false
+			}
+			switch v {
+			case ']':
+				if st.pop() != '[' {
+					return false
+				}
+			case ')':
+				if st.pop() != '(' {
+					return false
+				}
+			case '}':
+				if st.pop() != '{' {
+					return false
+				}
+			default:
+				return false
+			}
+		}
+	}
+	return len(st.s) == 0
+}
+
+type stack struct {
+	s []rune
+}
+
+func (s *stack) push(r rune) {
+	s.s = append(s.s, r)
+}
+
+func (s *stack) pop() rune {
+	l := len(s.s)
+	rt := s.s[l-1]
+	s.s = s.s[:l-1]
+	return rt
+}
+
 //1047
+func removeDuplicates(s string) string {
+	st := stackR{s: []byte{}}
+	for i := 0; i < len(s); i++ {
+		if st.max() == s[i] {
+			st.pop()
+		} else {
+			st.push(s[i])
+		}
+	}
+	return string(st.s)
+}
+
+type stackR struct {
+	s []byte
+}
+
+func (s *stackR) push(b byte) {
+	s.s = append(s.s, b)
+}
+
+func (s *stackR) max() byte {
+	if len(s.s) == 0 {
+		return 0
+	}
+	return s.s[len(s.s)-1]
+}
+
+func (s *stackR) pop() {
+	s.s = s.s[:len(s.s)-1]
+}
+
 //1
+func twoSum(nums []int, target int) []int {
+	m := make(map[int]int)
+	for i, v := range nums {
+		if _, ok := m[v]; !ok {
+			m[target-v] = i
+		} else {
+			return []int{m[v], i}
+		}
+	}
+	return []int{-1, -1}
+}
+
 //167
 //9
 //88

@@ -83,6 +83,18 @@ func BenchmarkBackspaceCompareSingleLoop(b *testing.B) {
 	}
 }
 
+func TestIsValid(t *testing.T) {
+	if !isValid("()()()[][][][]") {
+		t.Errorf("Expected %v, got %v", true, false)
+	}
+}
+
+func BenchmarkIsValid(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		isValid("()()()[][][][]")
+	}
+}
+
 // func TestDuplicateZeros(t *testing.T) {
 // 	if duplicateZeros([]int{0,0,0,0,0,0,0}) != []int{0,0,0,0,0} {
 // 		t.Errorf("Exptected %v, got %v", true, false)
