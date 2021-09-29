@@ -1,6 +1,9 @@
 package algo_strings
 
-import "strings"
+import (
+	"sort"
+	"strings"
+)
 
 //387
 func firstUniqChar(s string) int {
@@ -289,22 +292,106 @@ func twoSum(nums []int, target int) []int {
 
 //167
 func twoSumSorted(numbers []int, target int) []int {
-    l := 0
-    r := len(numbers) - 1
-    for l < r {
-        o := numbers[l] + numbers[r] 
-        if o == target {
-            return []int{l+1, r+1}
-        }
-        if o > target {
-            r--
-        } else {
-            l++
-        }
-    }
-    return []int{-1, -1}
+	l := 0
+	r := len(numbers) - 1
+	for l < r {
+		o := numbers[l] + numbers[r]
+		if o == target {
+			return []int{l + 1, r + 1}
+		}
+		if o > target {
+			r--
+		} else {
+			l++
+		}
+	}
+	return []int{-1, -1}
 }
 
+//55
+func canJump(nums []int) bool {
+	if len(nums) == 1 {
+		return true
+	}
+	max := nums[0]
+	for i := 1; i <= max; i++ {
+		cur := nums[i]
+		if cur+i >= len(nums)-1 {
+			return true
+		}
+		if cur+i > max {
+			max = cur + i
+		}
+	}
+	return false
+}
+
+//56 Merge Intervals
+func merge(intervals [][]int) [][]int {
+	//Sort the intervals with respect 0th index ascending
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][0] < intervals[j][0]
+	})
+	//Initialize the stack
+	stack := stackM{}
+	for i, x := range intervals {
+		if i == 0 {
+			stack.stackIntervals = append(stack.stackIntervals, x)
+			continue
+		}
+		y := stack.max()
+		if x[0] >= y[0] && x[0] <= y[1] {
+			z := []int{0, 0}
+			z[0] = y[0]
+			if y[1] >= x[1] {
+				z[1] = y[1]
+			} else {
+				z[1] = x[1]
+			}
+			stack.pop()
+			stack.add(z)
+			continue
+		}
+		stack.add(x)
+	}
+	return stack.stackIntervals
+}
+
+type stackM struct {
+	stackIntervals [][]int
+}
+
+func (s *stackM) add(interval []int) {
+	s.stackIntervals = append(s.stackIntervals, interval)
+}
+
+func (s *stackM) max() []int {
+	return s.stackIntervals[len(s.stackIntervals)-1]
+}
+
+func (s *stackM) pop() {
+	s.stackIntervals = s.stackIntervals[:len(s.stackIntervals)-1]
+}
+
+//303 Range Sum Query - Immutable
+type NumArray struct {
+	sum []int
+}
+
+func Constructor(nums []int) NumArray {
+	s := 0
+	sum := make([]int, len(nums)+1)
+	sum[0] = s
+	for i, v := range nums {
+		s = s + v
+		sum[i+1] = s
+	}
+	return NumArray{sum: sum}
+}
+
+func (this *NumArray) SumRange(left int, right int) int {
+	return this.sum[right+1] - this.sum[left]
+}
 
 //9
 //88
