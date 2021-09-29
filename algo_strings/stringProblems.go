@@ -393,6 +393,33 @@ func (this *NumArray) SumRange(left int, right int) int {
 	return this.sum[right+1] - this.sum[left]
 }
 
+//346. Moving Average from Data Stream
+
+type MovingAverage struct {
+	size  int
+	count int
+	queue []int
+	sum   int
+}
+
+func ConstructorM(size int) MovingAverage {
+	return MovingAverage{size: size, count: 0, queue: []int{}, sum: 0}
+}
+
+func (this *MovingAverage) Next(val int) float64 {
+	if this.count < this.size {
+		this.count++
+		this.queue = append(this.queue, val)
+		this.sum = this.sum + val
+		return float64(this.sum) / float64(this.count)
+	} else {
+		this.sum = this.sum + val
+		this.sum = this.sum - this.queue[0]
+		this.queue = append(this.queue[1:], val)
+		return float64(this.sum) / float64(this.size)
+	}
+}
+
 //9
 //88
 //234   => Linked List
